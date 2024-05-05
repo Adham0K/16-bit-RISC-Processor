@@ -1,0 +1,47 @@
+li $6 ,200         # Stack pointer
+addi $1 ,$0 ,0     # Base address of array
+addi $2 $0 10     # array size 10
+JAL init_array  # jump and link to intialize function with parameters base address and num of elements
+JAL sum_array  # jump and link to sum function
+JAL exit              # end program
+exit:
+JR $7                  # loop to itfself
+
+#init funtion
+init_array:    
+addi $3,$0,0  # counter=0
+addi $6,$6,-1  # sp-1
+sw $1,0($6)     # store base address in stack
+addi $6,$6,-1
+sw $2,0($6)
+loop_init:
+BGE $3,$2,end_init  # if counter>= size  end intialization 
+addi $4 , $0,3     #inializing value 3
+sw $4,0($1)
+addi $1,$1,1      #increment base address
+addi $3,$3,1                    #increment counter
+J loop_init
+end_init:
+lw $2,0($6)        #return size
+lw $1,1($6)        # return base address
+addi $6,$6,2     # return stack pointer
+JR $7                 #jump to Sum function
+#sum function
+sum_array:
+addi $3,$0,1   #counter =1
+lw $4,0($1)     # load array elements to register $4
+loop_sum:
+bge $3,$2,end_sum       #if counter>= size  end sum
+
+addi $1,$1,1                   # increment base address
+addi $3,$3,1                  #increment counter
+lw $5,0($1)    # load next element to $5
+add $4,$4,$5
+J loop_sum
+end_sum:
+JR $7
+
+
+
+
+

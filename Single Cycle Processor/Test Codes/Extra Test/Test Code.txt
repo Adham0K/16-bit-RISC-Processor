@@ -1,0 +1,36 @@
+LUI   16           
+    ANDI $2, $1, 31       
+    ORI  $3, $1, 31       
+    XORI $4, $1, 15      
+    # Arithmetic operations
+    ADD  $5, $2, $3       
+    SUB  $6, $3, $2       
+    # Set Less Than operations
+    SLT  $7, $5, $6       
+    SLTU $1, $6, $5       
+    # Shift operations
+    SLL  $2, $3, 3        
+    SRL  $3, $3, 2        
+    SRA  $4, $4, 2        
+    ROR  $5, $4, 1        
+    # Memory operations using immediate addressing
+    SW   $5, 10($0)       
+    LW   $6, 10($0)       
+    # Branching
+    BNE  $5, $6, diff     
+    BEQ  $5, $6, same     
+    BLT  $2, $3, less     
+    BGE  $3, $2, greater  
+diff:
+    ADDI $5, $5, -5       
+same:
+    ADDI $6, $6, 5        
+less:
+    SUB  $2, $3, $2       
+greater:
+    OR   $3, $3, $2       
+    # Jumpin
+ JAL  exit             
+exit:
+    JR   $7               # Jump to address in $7 to terminate
+

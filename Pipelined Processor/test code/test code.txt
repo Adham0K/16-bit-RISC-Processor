@@ -1,0 +1,25 @@
+Lui 900
+Addi R5, R1,13
+Xor R3, R1, R5
+Lw R1, 0(R0)    		#reg[1] <- mem[0]
+Lw R2, 1(R0)     		#reg[2] <- mem[1]
+Lw R3, 2(R0) 		#reg[3] <- mem[2]
+Addi R4, R4, 10
+Sub R4, R4, R4
+L2: Add R4, R2, R4
+Slt R6, R2, R3
+Beq R6, R0, L1
+Add R2, R1, R2
+Beq R0, R0, L2
+L1: Sw R4, 0(R0) 		#mem[0] <- reg[4]
+Jal func
+Sll R3, R2, 6
+ROR R6, R3, 3
+beq r0,r0,-1 		#program is over, keep looping back to here
+Func: or R5, R2, R3
+Lw R1, 0(R0)
+Lw R2, 5(R1)
+Lw R3 ,6(R1)
+And R4, R2, R3
+Sw R4, 0(R0) 		#mem[0] <- reg[4]
+Jr R7
